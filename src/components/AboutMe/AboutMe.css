@@ -1,0 +1,159 @@
+
+.about {
+    max-width: 1140px;
+    margin: 111px auto 110px auto;
+    position: relative;
+    padding: 0 50px 0 50px;
+  }
+  
+  .about__title {
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.88px;
+    padding: 0 0 23px 0;
+    margin: 0 0 66px 0;
+    width: 100%;
+    border-bottom: 1px solid #000;
+  }
+  
+  .about__name {
+    margin: 0 0 18px 0;
+    padding: 0;
+    font-size: 50px;
+    line-height: 58px; 
+    letter-spacing: -2px;
+  }
+  
+  .about__profession {
+    margin: 0 0 26px 0;
+    padding: 0;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+  
+  .about__info {
+    margin: 0 0 98px 0;
+    padding: 0;
+    max-width: 595px;
+    width: 100%;
+    color: #000;
+    line-height: 22px;
+    
+  }
+  
+  .about__img {
+    position: absolute;
+    top: 117px;
+    right: 50px;
+  }
+  
+  .about__link {
+    margin: 0;
+    padding: 0;
+    color: #000;
+    text-decoration: none;
+    font-weight: 500;
+    line-height: normal;
+    transition: opacity 1s ease-out;
+  }
+  
+  .about__link:hover {
+    opacity: 0.7;
+  }
+  
+  @media screen and (max-width: 1000px) {
+    .about__info {
+      max-width: 400px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .about {
+        margin: 90px auto 110px auto;
+    }
+  
+    .about__name {
+      font-size: 40px;
+      line-height: 40px;
+      letter-spacing: -1.6px;
+      margin: 0 0 17px 0;
+    }
+  
+    .about__profession {
+      font-size: 12px;
+      line-height: 18px;
+      margin: 0 0 19px 0;
+    }
+  
+    .about__info {
+      max-width: 362px;
+      font-size: 12px;
+      line-height: 18px; 
+      margin: 0 0 85px 0;
+    }
+  
+    .about__img {
+      right: 50px;
+      width: 255px;
+      height: 307px;
+    }
+  }
+
+  @media screen and (max-width: 720px) {
+    .about__info {
+      max-width: 200px;
+    }
+  }
+
+  @media screen and (max-width: 560px) {
+    .about {
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .about__img {
+      position: static;
+      width: 292px;
+      height: 352px;
+      align-self: center;
+      margin-bottom: 39px;
+    }
+  
+    .about__info {
+      max-width: 100%;
+    }
+  }
+
+  @media screen and (max-width: 360px) {
+    .about {
+      margin: 51px auto 90px auto;
+      padding: 0 14px;
+    }
+  
+    .about__title {
+      font-size: 18px;
+      letter-spacing: -0.72px;
+      padding: 0 0 28px 0;
+      margin: 0 0 60px 0;
+    }
+  
+    .about__name {
+      font-size: 30px;
+      letter-spacing: -1.2px;
+    }
+  
+    .about__profession {
+      font-size: 11px;
+      line-height: 16px;
+    }
+  
+    .about__info {
+      font-size: 11px;
+      line-height: 16px;
+      margin: 0 0 41px 0;
+    }
+  }
+  

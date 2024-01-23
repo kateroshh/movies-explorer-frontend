@@ -1,0 +1,136 @@
+.profile {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+}
+
+.profile__title {
+    margin: 87px 0 118px 0;
+    padding: 0;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    min-height: 330px;
+    height: 100%;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile-form-gr {
+    max-width: 409px;
+    width: 100%;
+    border: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-form-gr__label {
+    font-size: 11px;
+    font-weight: 500;
+    line-height: normal;
+    padding-bottom: 12px;
+    margin-bottom: 13px;
+    border-bottom: 1px solid #E8E8E8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile-form-gr__label:last-child {
+    border: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.profile-form-gr__input {
+    text-align: right;
+    border: none;
+    font-size: 11px;
+    font-weight: 400;
+    max-width: 350px;
+    width: 100%;
+    padding: 5px 0 5px 10px;
+}
+
+.profile-btns {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-btns__edit {
+    border: none;
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    line-height: normal;
+    cursor: pointer;
+    transition: opacity 1s ease-out;
+}
+
+.profile-btns__edit:hover {
+    opacity: .7;
+}
+
+.profile-btns__exit {
+    border: none;
+    background-color: transparent;
+    margin: 16px 0 -4px 0;
+    padding: 0;
+    color: #EE3465;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: normal;
+    cursor: pointer;
+    transition: opacity 1s ease-out;
+}
+
+.profile-btns__exit:hover {
+    opacity: .7;
+}
+
+@media screen and (max-width: 768px) {
+    .profile {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .profile__title {
+        margin: 160px 0 90px 0;
+    }
+
+    .profile-form {
+        width: 100%;
+    }
+
+}
+
+@media screen and (max-width: 460px) {
+    .profile {
+        max-width: 320px;
+    }
+
+    .profile__title {
+        margin: 0 0 75px 0;
+    }
+
+    .profile-form-gr {
+        max-width: 260px;
+    }
+
+    .profile-form-gr__input {
+        max-width: 200px;
+    }
+
+}
