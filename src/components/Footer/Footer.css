@@ -2,6 +2,8 @@
 .footer-container {
     width: 100%;
     background-color: #FAFAFA;
+    height: 172px;
+    margin-top: -172px;
   }
   
   .footer {

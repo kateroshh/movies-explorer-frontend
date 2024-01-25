@@ -4,14 +4,13 @@
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-evenly;
     text-align: center;
-    position: relative;
+    padding: 80px 0 0 0;
 }
 
 .not-found__title {
-    margin: 0 0 6px 0;
+    margin: 0;
     padding: 0;
     font-size: 140px;
     line-height: normal;
@@ -26,13 +25,11 @@
 }
 
 .not-found__link {
-    margin: 0;
+    margin: 0 0 -50px 0;
     color: #FF6838;
     text-decoration: none;
     transition: opacity 1s ease-out;
     font-size: 14px;
-    position: absolute;
-    bottom: 60px;
 }
 
 .not-found__link:hover {
@@ -41,11 +38,15 @@
 
 @media screen and (max-width: 768px) {
     .not-found {
-        justify-content: space-around;
+        padding: 0;
+    }
+
+    .not-found__content {
+        margin: 195px 0 0 0;
     }
 
     .not-found__link {
-        position: static;
+        margin: -30px 0 0 0;
     }
 }
 

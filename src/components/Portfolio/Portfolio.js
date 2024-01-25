@@ -9,6 +9,7 @@ function Portfolio() {
           <a
             className='portfolio-site__link'
             href='https://github.com/kateroshh/russian-travel'
+            target='blank'
           >
             Статичный сайт
           </a>
@@ -17,6 +18,7 @@ function Portfolio() {
           <a
             className='portfolio-site__link'
             href='https://github.com/kateroshh/mesto-react'
+            target='blank'
           >
             Адаптивный сайт
           </a>
@@ -25,6 +27,7 @@ function Portfolio() {
           <a
             className='portfolio-site__link'
             href='https://github.com/kateroshh/express-mesto-gha'
+            target='blank'
           >
             Одностраничное приложение
           </a>

@@ -27,12 +27,18 @@
     color: #A0A0A0;
     border: none;
     text-align: center;
-    padding: 7px 0;
-    width: 100%;
+    padding: 7px 0 7px 39px;
+    width: 93%;
     background-image: url(../../images/search-input.svg);
     background-repeat: no-repeat;
     background-position: left 7px top 7px;
 }
+
+.search-movie__input:focus-visible {
+    outline: 1px solid #E8E8E8;
+    border-radius: 20px;
+}
+
 
 .search-movie__btn {
     position: absolute;
@@ -46,6 +52,11 @@
     background-repeat: no-repeat;
     height: 40px;
     width: 40px;
+    transition: opacity 1s ease-out;
+}
+
+.search-movie__btn:hover {
+    opacity: .8;
 }
 
 @media screen and (max-width: 768px) {

@@ -3,7 +3,7 @@ import promoImg from '../../images/promo.svg';
 
 function Promo() {
   return (
-    <div className='promo'>
+    <section className='promo'>
       <img className='promo__img' src={promoImg} alt='Земля из букв' />
       <h1 className='promo__title'>
         Учебный проект студента факультета Веб&#8209;разработки.
@@ -11,10 +11,10 @@ function Promo() {
       <p className='promo__text'>
         Листайте ниже, чтобы узнать больше про этот проект и его создателя.
       </p>
-      <a className='promo__link' href='#'>
+      <a className='promo__link' href='#aboutProject'>
         Узнать больше
       </a>
-    </div>
+    </section>
   );
 }
 

@@ -12,7 +12,7 @@ function MoviesCard({ card, screen }) {
   }
 
   return (
-    <div className='card'>
+    <li className='card'>
       <div className='card-top'>
         <div className='card-title'>
           <h2 className='card-title__text'>{card.name}</h2>
@@ -21,7 +21,7 @@ function MoviesCard({ card, screen }) {
         <button className={`card-save ${savedMovieStyle}`}></button>
       </div>
       <img className='card__img' src={card.img} alt={card.name} />
-    </div>
+    </li>
   );
 }
 

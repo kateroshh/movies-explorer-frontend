@@ -1,8 +1,9 @@
 import './Profile.css';
+import { Link } from 'react-router-dom';
 
 function Profile() {
   return (
-    <div className='profile'>
+    <section className='profile'>
       <h1 className='profile__title'>Привет, Виталий!</h1>
       <form className='profile-form'>
         <fieldset className='profile-form-gr'>
@@ -14,6 +15,9 @@ function Profile() {
               name='name'
               id='name'
               value={'Виталий'}
+              placeholder='Введите ваше имя'
+              minlength='3'
+              maxlength='50'
             />
           </label>
 
@@ -21,20 +25,25 @@ function Profile() {
             E-mail
             <input
               className='profile-form-gr__input'
-              type='text'
+              type='email'
               name='email'
               id='email'
               value={'pochta@yandex.ru'}
+              placeholder='Введите ваш email'
             />
           </label>
         </fieldset>
 
         <div className='profile-btns'>
-          <button className='profile-btns__edit'>Редактировать</button>
-          <button className='profile-btns__exit'>Выйти из аккаунта</button>
+          <button className='profile-btns__edit' type='submit'>
+            Редактировать
+          </button>
+          <Link className='profile-btns__exit' to='/'>
+            Выйти из аккаунта
+          </Link>
         </div>
       </form>
-    </div>
+    </section>
   );
 }
 

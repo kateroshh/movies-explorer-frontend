@@ -14,7 +14,7 @@ function Login() {
         </label>
         <input
           className='login-form__input'
-          type='text'
+          type='email'
           name='email'
           id='email'
         />
@@ -26,10 +26,13 @@ function Login() {
           type='password'
           name='password'
           id='password'
+          placeholder='Введите ваш пароль'
         />
         <p className='login-form__error'></p>
         <div className='login-bottom'>
-          <button className='login-bottom__submit'>Войти</button>
+          <button className='login-bottom__submit' type='submit'>
+            Войти
+          </button>
 
           <div className='reg'>
             Ещё не зарегистрированы?

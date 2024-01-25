@@ -11,7 +11,7 @@ function MoviesCardList({ cards, screen }) {
           screen === 'saved-movies' ? 'card-list-container_saved' : ''
         }`}
       >
-        <div className='card-list'>
+        <ul className='card-list'>
           {cards.map((item) => (
             <MoviesCard
               key={item.id}
@@ -20,7 +20,7 @@ function MoviesCardList({ cards, screen }) {
               // onCardSaved={onCardSaved}
             />
           ))}
-        </div>
+        </ul>
       </div>
       <button
         className={`more ${screen === 'saved-movies' ? 'more_saved' : ''}`}

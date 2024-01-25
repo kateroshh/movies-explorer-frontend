@@ -17,15 +17,19 @@ function Register() {
           type='text'
           name='name'
           id='name'
+          placeholder='Введите ваше имя'
+          minlength='3'
+          maxlength='50'
         />
         <label className='register-form__label' for='email'>
           E-mail
         </label>
         <input
           className='register-form__input'
-          type='text'
+          type='email'
           name='email'
           id='email'
+          placeholder='Введите ваш email'
         />
         <label className='register-form__label' for='password'>
           Пароль
@@ -35,9 +39,14 @@ function Register() {
           type='password'
           name='password'
           id='password'
+          placeholder='Введите ваш пароль'
+          minlength='3'
+          maxlength='50'
         />
         <p className='register-form__error'>Что-то пошло не так...</p>
-        <button className='register-form__submit'>Зарегистрироваться</button>
+        <button className='register-form__submit' type='submit'>
+          Зарегистрироваться
+        </button>
       </form>
       <div className='auth'>
         Уже зарегистрированы?

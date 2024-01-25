@@ -7,11 +7,11 @@ import Preloader from '../Preloader/Preloader';
 
 function Movies() {
   return (
-    <div className='movies'>
+    <section className='movies'>
       <SearchForm />
       {/* <Preloader /> */}
       <MoviesCardList cards={cards} screen={'movies'} />
-    </div>
+    </section>
   );
 }
 

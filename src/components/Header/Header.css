@@ -215,11 +215,15 @@
     opacity: 1;
   }
 
+  .header-menu {
+    margin: -2px -7px 0 0;
+  }
+
   .user-movies {
-    max-width: 550px;
+    max-width: 520px;
     height: 100vh;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     position: fixed;
     right: 0;
@@ -229,7 +233,11 @@
     padding: 0;
     margin: 0;
     z-index: 10;
-}
+  }
+
+  .user-account {
+    padding: 0 0 96px 0;
+  }
 
   .header-menu {
     display: flex;
@@ -240,7 +248,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin: 0;
+    margin: 158px 0 0 0;
   }
 
   .nav-item {
@@ -256,7 +264,6 @@
     font-size: 18px;
     font-weight: 500;
     line-height: normal;
-    /* margin: 0; */
   }
 
   .link_active {
@@ -267,12 +274,28 @@
   .link_main-page {
     color: #000;
   }
+
+  .user-account__link {
+    font-size: 14px;
+  }
 }  
 
 @media screen and (max-width: 360px) {
   .header {
     padding: 18px 14px 0 14px;
     margin: 0 auto 83px auto;
+  }
+
+  .nav {
+    margin: 145px 0 0 0;
+  }
+
+  .nav-item {
+    padding: 0 0 24px 0;
+  }
+
+  .user-account {
+    padding: 0 0 49px 0;
   }
 
   .auth-btns__reg {
@@ -291,6 +314,6 @@
   }
 
   .header-menu {
-    margin: 2px 3px 0 0;
+    margin: -22px 0px 0 0;
   }
 }

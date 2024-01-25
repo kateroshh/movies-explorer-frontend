@@ -5,28 +5,37 @@ import photoStudent from '../../images/photo-student.jpg';
 
 function AboutMe() {
   return (
-    <div className='about'>
+    <section className='about'>
       <h2 className='about__title'>Студент</h2>
-      <img
-        className='about__img'
-        src={photoStudent}
-        alt='Фотография студента'
-      />
-      <p className='about__name'>Виталий</p>
-      <p className='about__profession'>Фронтенд-разработчик, 30 лет</p>
-      <p className='about__info'>
-        Я родился и живу в Саратове, закончил факультет экономики СГУ. У меня
-        есть жена и дочь. Я люблю слушать музыку, а ещё увлекаюсь бегом. Недавно
-        начал кодить. С 2015 года работал в компании «СКБ Контур». После того,
-        как прошёл курс по веб&#8209;разработке, начал заниматься
-        фриланс&#8209;заказами и ушёл с постоянной работы.
-      </p>
-      <a className='about__link' href='#'>
+      <div className='about__me'>
+        <div className='about__text'>
+          <h3 className='about__name'>Виталий</h3>
+          <p className='about__profession'>Фронтенд-разработчик, 30 лет</p>
+          <p className='about__info'>
+            Я родился и живу в Саратове, закончил факультет экономики СГУ. У
+            меня есть жена и дочь. Я люблю слушать музыку, а ещё увлекаюсь
+            бегом. Недавно начал кодить. С 2015 года работал в компании «СКБ
+            Контур». После того, как прошёл курс по веб&#8209;разработке, начал
+            заниматься фриланс&#8209;заказами и ушёл с постоянной работы.
+          </p>
+        </div>
+        <img
+          className='about__img'
+          src={photoStudent}
+          alt='Фотография студента'
+        />
+      </div>
+
+      <a
+        className='about__link'
+        href='https://github.com/kateroshh'
+        target='blank'
+      >
         Github
       </a>
 
       <Portfolio />
-    </div>
+    </section>
   );
 }
 

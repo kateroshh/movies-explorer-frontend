@@ -5,6 +5,11 @@
     position: relative;
     padding: 0 50px 0 50px;
   }
+
+  .about__me {
+    display: flex;
+    justify-content: space-between;
+  }
   
   .about__title {
     font-size: 22px;
@@ -24,6 +29,7 @@
     font-size: 50px;
     line-height: 58px; 
     letter-spacing: -2px;
+    font-weight: 400;
   }
   
   .about__profession {

@@ -10,10 +10,10 @@ function SavedMovies() {
   });
 
   return (
-    <div className='saved-movies'>
+    <section className='saved-movies'>
       <SearchForm />
       <MoviesCardList cards={cardsSaved} screen={'saved-movies'} />
-    </div>
+    </section>
   );
 }
 
