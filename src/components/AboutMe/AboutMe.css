@@ -10,6 +10,11 @@
     display: flex;
     justify-content: space-between;
   }
+
+  .about__img {
+    width: 270px;
+    height: 327px;
+  }
   
   .about__title {
     font-size: 22px;
@@ -48,12 +53,6 @@
     color: #000;
     line-height: 22px;
     
-  }
-  
-  .about__img {
-    position: absolute;
-    top: 117px;
-    right: 50px;
   }
   
   .about__link {
@@ -102,7 +101,6 @@
     }
   
     .about__img {
-      right: 50px;
       width: 255px;
       height: 307px;
     }
@@ -121,11 +119,9 @@
     }
   
     .about__img {
-      position: static;
-      width: 292px;
-      height: 352px;
+      width: 180px;
+      height: 191px;
       align-self: center;
-      margin-bottom: 39px;
     }
   
     .about__info {
@@ -133,12 +129,29 @@
     }
   }
 
-  @media screen and (max-width: 360px) {
+  @media screen and (max-width: 430px) {
+    .promo__title {
+      font-size: 30px;
+      font-weight: 400;
+      line-height: 38px; 
+      letter-spacing: -1.2px;
+    }
+
     .about {
       margin: 51px auto 90px auto;
       padding: 0 14px;
     }
+
+    .about__me {
+      flex-direction: column-reverse;
+    }
   
+    .about__img {
+      width: 292px;
+      height: 352px;
+      margin-bottom: 40px;
+    }
+
     .about__title {
       font-size: 18px;
       letter-spacing: -0.72px;

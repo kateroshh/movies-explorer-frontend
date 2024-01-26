@@ -4,6 +4,7 @@
     max-height: 271px;
     background-color: #FDFDFD;
     list-style: none;
+    box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.08);
 }
 
 .card__img {

@@ -3,11 +3,19 @@ import './Header.css';
 import HeaderLogo from '../HeaderLogo/HeaderLogo';
 import userAccountAuth from '../../images/user-account_auth.svg';
 import userAccountMain from '../../images/user-account_main.svg';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation, NavLink } from 'react-router-dom';
 
 function Header() {
   const [nav, setNav] = useState(false);
+
+  useEffect(() => {
+    if (nav) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [nav]);
 
   const url = useLocation().pathname;
   const isMain = url === '/' ? true : false;
@@ -94,11 +102,13 @@ function Header() {
           <button
             onClick={handleCloseMenu}
             className='header-menu__close'
+            type='button'
           ></button>
         ) : (
           <button
             onClick={handleOpenMenu}
             className='header-menu__open'
+            type='button'
           ></button>
         )}
       </div>

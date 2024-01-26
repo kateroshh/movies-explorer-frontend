@@ -17,6 +17,7 @@ function Login() {
           type='email'
           name='email'
           id='email'
+          placeholder='Введите ваш email'
         />
         <label className='login-form__label' for='password'>
           Пароль
