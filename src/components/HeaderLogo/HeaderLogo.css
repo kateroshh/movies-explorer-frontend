@@ -1,0 +1,23 @@
+.logo_page_main {
+    margin-right: 45px;
+}
+
+.logo__img {
+  transition: opacity 1s ease-out;
+}
+
+.logo__img:hover {
+  opacity: .8;
+}
+
+@media screen and (max-width: 768px) {
+    .logo_page_main {
+      margin: -3px 45px 0 0;
+    }
+  }  
+
+@media screen and (max-width: 360px) {
+    .logo_page_main {
+      margin: 0 45px 0 0;
+    }
+}
