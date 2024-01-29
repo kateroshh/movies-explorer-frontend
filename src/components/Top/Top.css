@@ -1,0 +1,18 @@
+.top {
+    width: 100%;
+    min-height: 651px;
+    background-color: #465DFF;
+    margin-bottom: 110px;
+}
+
+@media screen and (max-width: 768px) {
+    .top {
+        margin-bottom: 90px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .top {
+        margin-bottom: 71px;
+    }
+}
