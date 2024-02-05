@@ -1,13 +1,26 @@
 import './Register.css';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import HeaderLogo from '../HeaderLogo/HeaderLogo';
 
-function Register() {
+function Register({ onRegister, errorRegister }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorText, setErrorText] = useState('');
+
+  useEffect(() => {
+    if (errorRegister) {
+      if (errorRegister.includes('409')) {
+        setErrorText('Пользователь с таким email уже существет');
+      } else if (errorRegister.includes('400')) {
+        setErrorText('Данные некорректные');
+      } else {
+        setErrorText('Ошибка на стороне сервера');
+      }
+    }
+  }, [errorRegister]);
 
   function handleChangeName(e) {
     setName(e.target.value);
@@ -23,7 +36,7 @@ function Register() {
 
   function onSubmit(e) {
     e.preventDefault();
-    console.log('OK');
+    onRegister({ name, email, password });
   }
 
   return (
@@ -31,7 +44,7 @@ function Register() {
       <HeaderLogo />
       <h1 className='register__title'>Добро пожаловать!</h1>
       <form className='register-form' name='registration' onSubmit={onSubmit}>
-        <label className='register-form__label' for='name'>
+        <label className='register-form__label' htmlFor='name'>
           Имя
         </label>
         <input
@@ -40,12 +53,12 @@ function Register() {
           name='name'
           id='name'
           placeholder='Введите ваше имя'
-          minlength='3'
-          maxlength='50'
+          minLength='2'
+          maxLength='30'
           onChange={handleChangeName}
           value={name || ''}
         />
-        <label className='register-form__label' for='email'>
+        <label className='register-form__label' htmlFor='email'>
           E-mail
         </label>
         <input
@@ -57,7 +70,7 @@ function Register() {
           onChange={handleChangeEmail}
           value={email || ''}
         />
-        <label className='register-form__label' for='password'>
+        <label className='register-form__label' htmlFor='password'>
           Пароль
         </label>
         <input
@@ -66,12 +79,12 @@ function Register() {
           name='password'
           id='password'
           placeholder='Введите ваш пароль'
-          minlength='3'
-          maxlength='50'
+          minLength='3'
+          maxLength='50'
           onChange={handleChangePassword}
           value={password || ''}
         />
-        <p className='register-form__error'>Что-то пошло не так...</p>
+        <p className='register-form__error'>{errorText}</p>
         <button className='register-form__submit' type='submit'>
           Зарегистрироваться
         </button>

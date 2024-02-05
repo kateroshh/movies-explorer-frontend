@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import HeaderLogo from '../HeaderLogo/HeaderLogo';
 
-function Login() {
+function Login({ onLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -18,6 +18,7 @@ function Login() {
 
   function onSubmit(e) {
     e.preventDefault();
+    onLogin({ email, password });
   }
 
   return (
@@ -25,7 +26,7 @@ function Login() {
       <HeaderLogo />
       <h1 className='login__title'>Рады видеть!</h1>
       <form className='login-form' name='login' onSubmit={onSubmit}>
-        <label className='login-form__label' for='email'>
+        <label className='login-form__label' htmlFor='email'>
           E-mail
         </label>
         <input
@@ -37,7 +38,7 @@ function Login() {
           onChange={handleChangeEmail}
           value={email || ''}
         />
-        <label className='login-form__label' for='password'>
+        <label className='login-form__label' htmlFor='password'>
           Пароль
         </label>
         <input

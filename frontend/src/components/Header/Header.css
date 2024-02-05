@@ -73,6 +73,10 @@
   margin: -2px 0 0 45px;
   padding: 0;
   list-style: none;
+  display: none;
+}
+
+.nav_active {
   display: flex;
 }
 
@@ -113,16 +117,16 @@
 }
   
 .user-account {
-  display: flex;
+  display: none;
   cursor: pointer;
   margin-top: -7px;
   align-items: center;
   transition: opacity 1s ease-out;
 }
 
-/* .user-account_hidden {
-  display: none;
-} */
+.user-account_active {
+  display: flex;
+}
 
 .user-account:hover>.user-account__link {
   opacity: 0.7;

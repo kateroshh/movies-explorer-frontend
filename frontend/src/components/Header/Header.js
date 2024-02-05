@@ -6,7 +6,7 @@ import userAccountMain from '../../images/user-account_main.svg';
 import { useState, useEffect } from 'react';
 import { useLocation, NavLink } from 'react-router-dom';
 
-function Header() {
+function Header({ loggedIn }) {
   const [nav, setNav] = useState(false);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ function Header() {
         className={`header__container ${nav ? 'header__container_active' : ''}`}
       >
         <div className='user-movies'>
-          <ul className='nav'>
+          <ul className={`nav ${loggedIn ? 'nav_active' : ''}`}>
             <li className={`nav-item ${nav ? '' : 'nav-item_main'}`}>
               <NavLink className={setStyleMainLink} to='/'>
                 Главная
@@ -75,7 +75,9 @@ function Header() {
               </NavLink>
             </li>
           </ul>
-          <div className='user-account'>
+          <div
+            className={`user-account ${loggedIn ? 'user-account_active' : ''}`}
+          >
             <NavLink className={setStyleProfile} to='/profile'>
               Аккаунт
             </NavLink>
@@ -87,8 +89,7 @@ function Header() {
           </div>
         </div>
       </div>
-
-      <div className='auth-btns'>
+      <div className={`auth-btns ${loggedIn ? '' : 'auth-btns_active'}`}>
         <NavLink className='auth-btns__reg' to='/signup'>
           Регистрация
         </NavLink>

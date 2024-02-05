@@ -10,13 +10,13 @@ class MainApi {
 
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers,
+      credentials: 'include',
     }).then((res) => this._checkResponse(res));
   }
 }
 
 const mainApi = new MainApi({
-  baseUrl: 'http://localhost:3000/',
+  baseUrl: 'http://localhost:3000',
   headers: {
     'Content-Type': 'application/json',
   },
