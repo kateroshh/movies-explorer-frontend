@@ -8,8 +8,11 @@
 }
 
 .card__img {
+    max-width: 364px;
+    height: 203px;
     width: 100%;
     background-size: cover;
+    object-fit: cover;
 }
 
 .card-top {
@@ -28,6 +31,11 @@
     font-size: 15px;
     font-weight: 500;
     line-height: normal;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    max-width: 290px;
+    width: 100%;
 }
 
 .card-title__time {
@@ -70,11 +78,16 @@
         max-width: 339px;
         max-height: 190px;
     }
+
+    .card-title__text {
+        max-width: 260px;
+    }
 }
 
 @media screen and (max-width: 550px) {
     .card-title__text {
         font-size: 13px;
+        max-width: 160px;
     }
 }
 

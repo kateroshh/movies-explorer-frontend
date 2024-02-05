@@ -1,6 +1,5 @@
 import './MoviesCard.css';
-import cardImg from '../../images/cards/1.jpg';
-// ${card.img}
+import formatTime from '../../utils/formatTime';
 
 function MoviesCard({ card, screen }) {
   let savedMovieStyle = '';
@@ -15,12 +14,16 @@ function MoviesCard({ card, screen }) {
     <li className='card'>
       <div className='card-top'>
         <div className='card-title'>
-          <h2 className='card-title__text'>{card.name}</h2>
-          <p className='card-title__time'>{card.time}</p>
+          <h2 className='card-title__text'>{card.nameRU}</h2>
+          <p className='card-title__time'>{formatTime(card.duration)}</p>
         </div>
         <button className={`card-save ${savedMovieStyle}`}></button>
       </div>
-      <img className='card__img' src={card.img} alt={card.name} />
+      <img
+        className='card__img'
+        src={'https://api.nomoreparties.co/' + card.image.url}
+        alt={card.nameRU}
+      />
     </li>
   );
 }

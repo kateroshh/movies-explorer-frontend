@@ -59,6 +59,11 @@
     opacity: .8;
 }
 
+.search-movie__btn:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
 @media screen and (max-width: 768px) {
     .search-form {
         padding-top: 5px;

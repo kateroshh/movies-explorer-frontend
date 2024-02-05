@@ -1,6 +1,6 @@
 .header {
     max-width: 1140px;
-    margin: 0 auto 23px auto;
+    /* margin: 0 auto 23px auto; */
     padding: 21px 30px 0 30px;
     display: flex;
     justify-content: space-between;
@@ -181,7 +181,7 @@
   .header {
     max-width: 768px;
     padding: 18px 30px 0 30px;
-    margin: 0 auto 87px auto;
+    /* margin: 0 auto 87px auto; */
   }
 
   .header__container {
@@ -279,7 +279,7 @@
 @media screen and (max-width: 360px) {
   .header {
     padding: 18px 14px 0 14px;
-    margin: 0 auto 83px auto;
+    /* margin: 0 auto 83px auto; */
   }
 
   .nav {

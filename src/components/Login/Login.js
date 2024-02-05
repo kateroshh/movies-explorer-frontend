@@ -1,14 +1,30 @@
 import './Login.css';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 import HeaderLogo from '../HeaderLogo/HeaderLogo';
 
 function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  function handleChangeEmail(e) {
+    setEmail(e.target.value);
+  }
+
+  function handleChangePassword(e) {
+    setPassword(e.target.value);
+  }
+
+  function onSubmit(e) {
+    e.preventDefault();
+  }
+
   return (
     <div className='login'>
       <HeaderLogo />
       <h1 className='login__title'>Рады видеть!</h1>
-      <form className='login-form'>
+      <form className='login-form' name='login' onSubmit={onSubmit}>
         <label className='login-form__label' for='email'>
           E-mail
         </label>
@@ -18,6 +34,8 @@ function Login() {
           name='email'
           id='email'
           placeholder='Введите ваш email'
+          onChange={handleChangeEmail}
+          value={email || ''}
         />
         <label className='login-form__label' for='password'>
           Пароль
@@ -28,6 +46,8 @@ function Login() {
           name='password'
           id='password'
           placeholder='Введите ваш пароль'
+          onChange={handleChangePassword}
+          value={password || ''}
         />
         <p className='login-form__error'></p>
         <div className='login-bottom'>

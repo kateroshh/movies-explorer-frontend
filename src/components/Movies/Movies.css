@@ -2,3 +2,10 @@
     min-height: 100vh;
     padding-bottom: 172px;
 }
+
+.movies__notfound {
+    max-width: 1140px;
+    padding: 0 30px 0 30px;
+    margin: 0 auto;
+    font-weight: 400;
+}
