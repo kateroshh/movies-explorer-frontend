@@ -13,6 +13,41 @@ class MainApi {
       credentials: 'include',
     }).then((res) => this._checkResponse(res));
   }
+
+  getSavedMovies() {
+    return fetch(`${this._baseUrl}/movies`, {
+      credentials: 'include',
+    }).then((res) => this._checkResponse(res));
+  }
+
+  saveMovie(movie) {
+    return fetch(`${this._baseUrl}/movies`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: this._headers,
+      body: JSON.stringify({
+        country: movie.country,
+        director: movie.director,
+        duration: movie.duration,
+        year: movie.year,
+        description: movie.description,
+        image: 'https://api.nomoreparties.co' + movie.image.url,
+        trailerLink: movie.trailerLink,
+        thumbnail: 'https://api.nomoreparties.co' + movie.image.url,
+        movieId: movie.id,
+        nameRU: movie.nameRU,
+        nameEN: movie.nameEN,
+      }),
+    }).then((res) => this._checkResponse(res));
+  }
+
+  deleteMovie(movieID) {
+    return fetch(`${this._baseUrl}/movies/${movieID}`, {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: this._headers,
+    }).then((res) => this._checkResponse(res));
+  }
 }
 
 const mainApi = new MainApi({

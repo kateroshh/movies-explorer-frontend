@@ -23,7 +23,7 @@ function findStep(windowWidth) {
   }
 }
 
-function MoviesCardList({ movies, windowSize, screen }) {
+function MoviesCardList({ movies, windowSize, screen, savedMovies }) {
   const windowWidth = windowSize[0];
   const isResize = windowSize[2];
 
@@ -56,10 +56,10 @@ function MoviesCardList({ movies, windowSize, screen }) {
         <ul className='card-list'>
           {movies.slice(0, endPage).map((item) => (
             <MoviesCard
-              key={item.id}
+              key={screen === 'saved-movies' ? item._id : item.id}
               card={item}
               screen={screen}
-              // onCardSaved={onCardSaved}
+              savedMovies={savedMovies}
             />
           ))}
         </ul>

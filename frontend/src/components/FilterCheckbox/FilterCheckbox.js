@@ -1,8 +1,10 @@
 import './FilterCheckbox.css';
 import { useLocalStorageState as useStorage } from '../../utils/hooks';
 
-function FilterCheckbox({ onChangeCheckbox }) {
-  const [chkbox, setChkbox] = useStorage('isShortFilms', false);
+function FilterCheckbox({ onChangeCheckbox, screen }) {
+  const requestMovies =
+    screen === 'saved-movies' ? 'isShortFilmsSaved' : 'isShortFilms';
+  const [chkbox, setChkbox] = useStorage(requestMovies, false);
 
   function handleChangeCheckbox(e) {
     setChkbox(e.target.checked);

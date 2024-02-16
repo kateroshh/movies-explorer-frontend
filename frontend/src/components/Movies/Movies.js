@@ -2,22 +2,37 @@ import './Movies.css';
 import { useEffect, useState } from 'react';
 import searchMovies from '../../utils/search-movies';
 import { useLocalStorageState as useStorage } from '../../utils/hooks';
+import moviesApi from '../../utils/MoviesApi';
+import mainApi from '../../utils/MainApi';
 
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 
-function Movies({ movies, windowSize }) {
-  // const [request, setRequest] = useState(
-  //   JSON.parse(localStorage.getItem('request')) || ''
-  // );
-  // const [isShortFilms, setIsShortFilms] = useState(false);
-
+function Movies({ windowSize }) {
   const [request, setRequest] = useStorage('request', '');
   const [isShortFilms, setIsShortFilms] = useStorage('isShortFilms', false);
+  const [movies, setMovies] = useStorage('movies', []);
   const [listMovies, setListMovies] = useState([]);
-  // console.log('request ', request);
-  // console.log('request ', isShortFilms);
+  const [savedMovies, setSavedMovies] = useState([]);
+  const [errorText, setErrorText] = useState('');
+
+  useEffect(() => {
+    filterMovies();
+
+    Promise.all([moviesApi.getMovies(), mainApi.getSavedMovies()])
+      .then(([moviesData, savedMoviesApi]) => {
+        setSavedMovies(savedMoviesApi);
+        setMovies(moviesData);
+      })
+      .catch((err) => {
+        setErrorText(err.message || err);
+      });
+  }, []);
+
+  useEffect(() => {
+    filterMovies();
+  }, [request, isShortFilms]);
 
   function filterMovies() {
     if (request || request !== '' || request !== undefined) {
@@ -28,15 +43,6 @@ function Movies({ movies, windowSize }) {
     }
   }
 
-  useEffect(() => {
-    filterMovies();
-    // console.log(movies);
-  }, []);
-
-  useEffect(() => {
-    filterMovies();
-  }, [request, isShortFilms]);
-
   const handleChangeRequest = (value) => {
     setRequest(value);
   };
@@ -45,21 +51,53 @@ function Movies({ movies, windowSize }) {
     setIsShortFilms(value);
   };
 
+  // function handleMovieLike(movie) {
+  //   console.log(savedMovies);
+  //   mainApi
+  //     .saveMovie(movie)
+  //     .then((newMovie) => {
+  //       setListMovies((state) =>
+  //         state.map((c) => (c.id === newMovie.id ? (c.saved = true) : c))
+  //       );
+  //     })
+  //     .catch((err) => {
+  //       console.log('Ошибка получения новых данных setCards', err);
+  //     });
+  // }
+
+  // function handleMovieDelete(movieID) {
+  //   mainApi
+  //     .deleteMovie(movieID)
+  //     .then(() => {
+  //       setListMovies((state) => state.filter((card) => card._id !== movieID));
+  //     })
+  //     .catch((err) => {
+  //       console.log('Ошибка получения новых данных setCards', err);
+  //     });
+  // }
+
   return (
     <section className='movies'>
       <SearchForm
         onClick={handleChangeRequest}
         onChangeCheckbox={handleChangeShortFilms}
+        screen={'movies'}
       />
-      {request === '' || request === undefined ? (
+      {errorText ? (
+        <div className='movies__error'>
+          Во время запроса произошла ошибка. Возможно, проблема с соединением
+          или сервер недоступен. Подождите немного и попробуйте ещё раз
+        </div>
+      ) : request === '' || request === undefined ? (
         <Preloader />
       ) : listMovies.length === 0 ? (
-        <div className='movies__notfound'>Ничего не найдено</div>
+        <div className='movies__error'>Ничего не найдено</div>
       ) : (
         <MoviesCardList
           movies={listMovies}
           windowSize={windowSize}
           screen={'movies'}
+          savedMovies={savedMovies}
         />
       )}
     </section>

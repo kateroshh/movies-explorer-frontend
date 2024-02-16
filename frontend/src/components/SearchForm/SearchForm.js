@@ -3,8 +3,9 @@ import { useLocalStorageState as useStorage } from '../../utils/hooks';
 
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
-function SearchForm({ onClick, onChangeCheckbox }) {
-  const [movie, setMovie] = useStorage('request', '');
+function SearchForm({ onClick, onChangeCheckbox, screen }) {
+  const requestMovies = screen === 'saved-movies' ? 'requestSaved' : 'request';
+  const [movie, setMovie] = useStorage(requestMovies, '');
 
   function handleChangeMovie(e) {
     setMovie(e.target.value);
@@ -41,7 +42,7 @@ function SearchForm({ onClick, onChangeCheckbox }) {
             disabled={movie !== '' ? false : true}
           />
         </fieldset>
-        <FilterCheckbox onChangeCheckbox={onChangeCheckbox} />
+        <FilterCheckbox onChangeCheckbox={onChangeCheckbox} screen={screen} />
       </form>
     </div>
   );
