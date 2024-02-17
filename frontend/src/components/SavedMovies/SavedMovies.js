@@ -6,6 +6,7 @@ import searchMovies from '../../utils/search-movies';
 
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import Preloader from '../Preloader/Preloader';
 
 function SavedMovies({ windowSize }) {
   const [requestSaved, setRequestSaved] = useStorage('requestSaved', '');
@@ -14,18 +15,20 @@ function SavedMovies({ windowSize }) {
     false
   );
   const [savedMovies, setSavedMovies] = useState([]);
+  const [savedMoviesList, setSavedMoviesList] = useState([]);
   const [errorText, setErrorText] = useState('');
 
   useEffect(() => {
-    filterMovies();
-
     Promise.all([mainApi.getSavedMovies()])
       .then(([moviesData]) => {
         setSavedMovies(moviesData);
+        setSavedMoviesList(moviesData);
       })
       .catch((err) => {
         setErrorText(err.message || err);
       });
+
+    filterMovies();
   }, []);
 
   useEffect(() => {
@@ -37,7 +40,7 @@ function SavedMovies({ windowSize }) {
       const filteredMovies = savedMovies.filter((movie) =>
         searchMovies(movie, requestSaved, isShortFilmsSaved)
       );
-      setSavedMovies(filteredMovies);
+      setSavedMoviesList(filteredMovies);
     }
   }
 
@@ -49,16 +52,11 @@ function SavedMovies({ windowSize }) {
     setIsShortFilmsSaved(value);
   };
 
-  function handleMovieDelete(movieID) {
-    mainApi
-      .deleteMovie(movieID)
-      .then(() => {
-        setSavedMovies((state) => state.filter((card) => card._id !== movieID));
-      })
-      .catch((err) => {
-        console.log('Ошибка получения новых данных setCards', err);
-      });
-  }
+  const handleDeleteMovie = (movieID) => {
+    setSavedMovies((state) =>
+      state.filter((movie) => movie.movieId !== movieID)
+    );
+  };
 
   return (
     <section className='saved-movies'>
@@ -67,14 +65,20 @@ function SavedMovies({ windowSize }) {
         onChangeCheckbox={handleChangeShortFilms}
         screen={'saved-movies'}
       />
-      {savedMovies.length === 0 ? (
+      {errorText ? (
+        <div className='movies__error'>
+          Во время запроса произошла ошибка. Возможно, проблема с соединением
+          или сервер недоступен. Подождите немного и попробуйте ещё раз
+        </div>
+      ) : savedMoviesList.length === 0 ? (
         <div className='saved-movies__error'>Нет сохраненных фильмов</div>
       ) : (
         <MoviesCardList
-          movies={savedMovies}
+          movies={savedMoviesList}
           windowSize={windowSize}
           screen={'saved-movies'}
-          onMovieDelete={handleMovieDelete}
+          savedMovies={savedMovies}
+          onDeleteMovie={handleDeleteMovie}
         />
       )}
     </section>

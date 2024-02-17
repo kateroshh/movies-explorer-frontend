@@ -7,6 +7,15 @@
     box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.08);
 }
 
+.card__link {
+    text-decoration: none;
+    color: #000;
+}
+
+.card__link:hover {
+    opacity: .8;
+}
+
 .card__img {
     max-width: 364px;
     height: 203px;

@@ -80,17 +80,17 @@ function App() {
   }, [loggedIn]);
 
   useEffect(() => {
-    // setWindowResizing([window.innerWidth, window.innerHeight, false]);
-    // let timeout;
-    // const handleResize = () => {
-    //   clearTimeout(timeout);
-    //   setWindowResizing([window.innerWidth, window.innerHeight, true]);
-    //   timeout = setTimeout(() => {
-    //     setWindowResizing([window.innerWidth, window.innerHeight, false]);
-    //   }, 200);
-    // };
-    // window.addEventListener('resize', handleResize);
-    // return () => window.removeEventListener('resize', handleResize);
+    setWindowResizing([window.innerWidth, window.innerHeight, false]);
+    let timeout;
+    const handleResize = () => {
+      clearTimeout(timeout);
+      setWindowResizing([window.innerWidth, window.innerHeight, true]);
+      timeout = setTimeout(() => {
+        setWindowResizing([window.innerWidth, window.innerHeight, false]);
+      }, 200);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   function handleUserInfo(res) {

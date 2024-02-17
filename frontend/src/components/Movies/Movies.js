@@ -26,7 +26,10 @@ function Movies({ windowSize }) {
         setMovies(moviesData);
       })
       .catch((err) => {
-        setErrorText(err.message || err);
+        // setErrorText(err.message || err);
+        setErrorText(
+          'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз'
+        );
       });
   }, []);
 
@@ -45,36 +48,16 @@ function Movies({ windowSize }) {
 
   const handleChangeRequest = (value) => {
     setRequest(value);
+    if (value === '') {
+      setErrorText('Нужно ввести ключевое слово');
+    } else {
+      setErrorText('');
+    }
   };
 
   const handleChangeShortFilms = (value) => {
     setIsShortFilms(value);
   };
-
-  // function handleMovieLike(movie) {
-  //   console.log(savedMovies);
-  //   mainApi
-  //     .saveMovie(movie)
-  //     .then((newMovie) => {
-  //       setListMovies((state) =>
-  //         state.map((c) => (c.id === newMovie.id ? (c.saved = true) : c))
-  //       );
-  //     })
-  //     .catch((err) => {
-  //       console.log('Ошибка получения новых данных setCards', err);
-  //     });
-  // }
-
-  // function handleMovieDelete(movieID) {
-  //   mainApi
-  //     .deleteMovie(movieID)
-  //     .then(() => {
-  //       setListMovies((state) => state.filter((card) => card._id !== movieID));
-  //     })
-  //     .catch((err) => {
-  //       console.log('Ошибка получения новых данных setCards', err);
-  //     });
-  // }
 
   return (
     <section className='movies'>
@@ -84,10 +67,7 @@ function Movies({ windowSize }) {
         screen={'movies'}
       />
       {errorText ? (
-        <div className='movies__error'>
-          Во время запроса произошла ошибка. Возможно, проблема с соединением
-          или сервер недоступен. Подождите немного и попробуйте ещё раз
-        </div>
+        <div className='movies__error'>{errorText}</div>
       ) : request === '' || request === undefined ? (
         <Preloader />
       ) : listMovies.length === 0 ? (

@@ -23,7 +23,13 @@ function findStep(windowWidth) {
   }
 }
 
-function MoviesCardList({ movies, windowSize, screen, savedMovies }) {
+function MoviesCardList({
+  movies,
+  windowSize,
+  screen,
+  savedMovies,
+  onDeleteMovie,
+}) {
   const windowWidth = windowSize[0];
   const isResize = windowSize[2];
 
@@ -60,6 +66,7 @@ function MoviesCardList({ movies, windowSize, screen, savedMovies }) {
               card={item}
               screen={screen}
               savedMovies={savedMovies}
+              onDeleteMovie={onDeleteMovie}
             />
           ))}
         </ul>

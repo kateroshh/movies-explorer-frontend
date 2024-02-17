@@ -48,6 +48,18 @@ class MainApi {
       headers: this._headers,
     }).then((res) => this._checkResponse(res));
   }
+
+  saveUserInfo(name, email) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: 'PATCH',
+      credentials: 'include',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: name,
+        email: email,
+      }),
+    }).then((res) => this._checkResponse(res));
+  }
 }
 
 const mainApi = new MainApi({

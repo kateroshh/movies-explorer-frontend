@@ -49,8 +49,16 @@ function Register({ onRegister, errorRegister }) {
         setNameDirty(true);
       }
     } else {
-      setNameError('');
-      setNameDirty(false);
+      const re = /^[А-ЯA-ZёәіңғүұқөһӘІҢҒҮҰҚӨҺ\s-]+$/i;
+      if (!re.test(String(e.target.value).toLowerCase())) {
+        setNameError(
+          'Имя может содержать только латиницу, кириллицу, пробел или дефис'
+        );
+        setNameDirty(true);
+      } else {
+        setNameError('');
+        setNameDirty(false);
+      }
     }
   }
 
