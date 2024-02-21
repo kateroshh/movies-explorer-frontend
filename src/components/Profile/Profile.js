@@ -39,9 +39,11 @@ function Profile({ userData, onExit }) {
           'Имя может содержать только латиницу, кириллицу, пробел или дефис'
         );
         setNameDirty(true);
+        setFormValid(false);
       } else {
         setNameError('');
         setNameDirty(false);
+        setFormValid(true);
       }
     }
   }
@@ -62,7 +64,6 @@ function Profile({ userData, onExit }) {
         setEmailError('');
         setEmailDirty(false);
         setFormValid(true);
-        console.log('j');
       }
     }
   }

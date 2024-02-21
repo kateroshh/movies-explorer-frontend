@@ -1,6 +1,10 @@
 .movies {
+    max-width: 1140px;
+    width: 100%;
+    margin: 0 auto;
     min-height: 100vh;
     padding-bottom: 172px;
+    
 }
 
 .movies__error {

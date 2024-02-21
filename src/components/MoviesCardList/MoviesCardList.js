@@ -6,8 +6,8 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 function findEndPage(windowWidth) {
   if (windowWidth >= 1280) {
     return 12;
-  } else if (windowWidth < 1280 && windowWidth >= 480) {
-    return 12;
+  } else if (windowWidth < 1000 && windowWidth >= 480) {
+    return 8;
   } else if (windowWidth < 480 && windowWidth >= 320) {
     return 5;
   }
@@ -16,8 +16,8 @@ function findEndPage(windowWidth) {
 function findStep(windowWidth) {
   if (windowWidth >= 1280) {
     return 3;
-  } else if (windowWidth < 1280 && windowWidth >= 480) {
-    return 3;
+  } else if (windowWidth < 1000 && windowWidth >= 480) {
+    return 2;
   } else if (windowWidth < 480 && windowWidth >= 320) {
     return 2;
   }

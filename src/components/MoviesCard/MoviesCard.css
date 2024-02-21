@@ -43,7 +43,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis; 
-    max-width: 290px;
+    max-width: 250px;
     width: 100%;
 }
 
@@ -82,37 +82,38 @@
     opacity: .7;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1000px) {
     .card__img {
         max-width: 339px;
         max-height: 190px;
     }
 
     .card-title__text {
-        max-width: 260px;
+        max-width: 230px;
     }
 }
 
-@media screen and (max-width: 550px) {
+/* @media screen and (max-width: 550px) {
     .card-title__text {
         font-size: 13px;
         max-width: 160px;
     }
-}
+} */
 
-@media screen and (max-width: 460px) {
+@media screen and (max-width: 600px) {
     .card {
-        max-width: 300px;
+        max-width: 500px;
         height: 236px;
     }
 
     .card__img {
-        max-width: 300px;
+        max-width: 500px;
         height: 168px;
     }
 
     .card-title__text {
         font-size: 15px;
+        max-width: 160px;
     }
 
 }
