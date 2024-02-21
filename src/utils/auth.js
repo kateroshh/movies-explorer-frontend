@@ -1,5 +1,5 @@
-export const BASE_URL = 'http://localhost:3000';
-// export const BASE_URL = "https://api.kateroshh.nomoredomainsrocks.ru";
+export const BASE_URL = 'http://localhost:3001';
+// export const BASE_URL = 'https://api.kateroshh.nomoredomainsrocks.ru';
 
 function checkResponse(res) {
   return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);

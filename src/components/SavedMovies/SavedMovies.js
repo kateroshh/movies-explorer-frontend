@@ -6,7 +6,6 @@ import searchMovies from '../../utils/search-movies';
 
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import Preloader from '../Preloader/Preloader';
 
 function SavedMovies({ windowSize }) {
   const [requestSaved, setRequestSaved] = useStorage('requestSaved', '');
@@ -53,7 +52,7 @@ function SavedMovies({ windowSize }) {
   };
 
   const handleDeleteMovie = (movieID) => {
-    setSavedMovies((state) =>
+    setSavedMoviesList((state) =>
       state.filter((movie) => movie.movieId !== movieID)
     );
   };
