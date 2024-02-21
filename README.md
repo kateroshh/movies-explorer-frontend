@@ -9,7 +9,9 @@
 
 Адрес репозитория: https://github.com/kateroshh/movies-explorer-frontend
 
-Дизайн макет:
+Pull requests https://github.com/kateroshh/movies-explorer-frontend/pull/3
+
+## Дизайн макет:
 
 <ul>
   <li>Название: light-5</li>
@@ -19,13 +21,13 @@
   </li>
 </ul>
 
-<!-- ## Ссылки на проект
+## Ссылки на проект
 
-IP 51.250.87.228
-
-Backend https://api.kateroshh.nomoredomainsrocks.ru
-
-Frontend https://kateroshh.nomoredomainsrocks.ru -->
+<ul>
+  <li>IP 158.160.43.234</li>
+  <li>Backend https://api.kateroshh.nomoredomainsrocks.ru</li>
+  <li>Frontend https://kateroshh.nomoredomainsrocks.ru</li>
+</ul>
 
 ## Технологии разработки Front-end
 
