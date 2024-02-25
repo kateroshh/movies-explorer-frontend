@@ -1,3 +1,5 @@
+import { DURATION_OF_SHORTFILMS } from './constants';
+
 const searchMovies = (movie, request, isShortFilms) => {
   const filterNameRU = movie.nameRU
     .toLowerCase()
@@ -6,7 +8,7 @@ const searchMovies = (movie, request, isShortFilms) => {
     .toLowerCase()
     .includes(request.toLowerCase());
   const filterShortFilms = isShortFilms
-    ? movie.duration <= 40
+    ? movie.duration <= DURATION_OF_SHORTFILMS
     : movie.duration > 0;
   return (filterNameEN || filterNameRU) && filterShortFilms;
 };

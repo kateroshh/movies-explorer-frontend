@@ -1,17 +1,22 @@
 import './Profile.css';
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import * as token from '../../utils/token';
 import mainApi from '../../utils/MainApi';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import Header from '../Header/Header';
 
-function Profile({ userData, onExit }) {
-  const [name, setName] = useState(userData.name || '');
-  const [email, setEmail] = useState(userData.email || '');
+function Profile({ loggedIn, onExit }) {
+  //Подписываемся на глобальный контекст
+  const currentUser = useContext(CurrentUserContext);
+  const [name, setName] = useState(currentUser.name || '');
+  const [email, setEmail] = useState(currentUser.email || '');
   const [nameDirty, setNameDirty] = useState(false);
   const [emailDirty, setEmailDirty] = useState(false);
   const [nameError, setNameError] = useState('Имя не может быть пустым');
   const [emailError, setEmailError] = useState('Email не может быть пустым');
   const [formValid, setFormValid] = useState(false);
+  const [inputValid, setInputValid] = useState(false);
   const [formUpdate, setFormUpdate] = useState(false);
   const [errorText, setErrorText] = useState('');
 
@@ -43,7 +48,11 @@ function Profile({ userData, onExit }) {
       } else {
         setNameError('');
         setNameDirty(false);
-        setFormValid(true);
+        if (currentUser.name === e.target.value) {
+          setFormValid(false);
+        } else {
+          setFormValid(true);
+        }
       }
     }
   }
@@ -63,7 +72,11 @@ function Profile({ userData, onExit }) {
       } else {
         setEmailError('');
         setEmailDirty(false);
-        setFormValid(true);
+        if (currentUser.email === e.target.value) {
+          setFormValid(false);
+        } else {
+          setFormValid(true);
+        }
       }
     }
   }
@@ -74,6 +87,8 @@ function Profile({ userData, onExit }) {
   }
 
   function handleSubmit(e) {
+    setFormValid(false);
+    setInputValid(true);
     e.preventDefault();
     mainApi
       .saveUserInfo(name, email)
@@ -81,6 +96,8 @@ function Profile({ userData, onExit }) {
         setFormUpdate(true);
         setFormValid(false);
         setErrorText('');
+        setFormValid(true);
+        setInputValid(false);
       })
       .catch((err) => {
         setErrorText(err.message || err);
@@ -88,68 +105,74 @@ function Profile({ userData, onExit }) {
   }
 
   return (
-    <section className='profile'>
-      <h1 className='profile__title'>{`Привет, ${
-        formUpdate ? name : userData.name
-      }!`}</h1>
-      <form className='profile-form' onSubmit={handleSubmit}>
-        <fieldset className='profile-form-gr'>
-          {nameDirty && nameError && (
-            <div className='profile-form-gr__errorText'>{nameError}</div>
-          )}
-          <label className='profile-form-gr__label' htmlFor='name'>
-            Имя
-            <input
-              className='profile-form-gr__input'
-              type='text'
-              name='name'
-              id='name'
-              placeholder='Введите ваше имя'
-              minLength='2'
-              maxLength='30'
-              onChange={handleChangeName}
-              value={name || ''}
-            />
-          </label>
-          {emailDirty && emailError && (
-            <div className='profile-form-gr__errorText'>{emailError}</div>
-          )}
-          <label className='profile-form-gr__label' htmlFor='email'>
-            E-mail
-            <input
-              className='profile-form-gr__input'
-              type='email'
-              name='email'
-              id='email'
-              placeholder='Введите ваш email'
-              onChange={handleChangeEmail}
-              value={email || ''}
-            />
-          </label>
-        </fieldset>
+    <>
+      <Header loggedIn={loggedIn} />
 
-        <div className='profile-btns'>
-          {errorText && <p className='profile-btns__error'>{errorText}</p>}
-          {!errorText && formUpdate && (
-            <p className='profile-btns__update'>Данные успешно обновлены</p>
-          )}
-          <button
-            className='profile-btns__edit'
-            type='submit'
-            disabled={!formValid}
-          >
-            Редактировать
-          </button>
-          <Link
-            className='profile-btns__exit'
-            to='/'
-            onClick={handleRemoveToken}
-          >
-            Выйти из аккаунта
-          </Link>
-        </div>
-      </form>
-    </section>
+      <section className='profile'>
+        <h1 className='profile__title'>{`Привет, ${
+          formUpdate ? name : currentUser.name
+        }!`}</h1>
+        <form className='profile-form' onSubmit={handleSubmit}>
+          <fieldset className='profile-form-gr'>
+            {nameDirty && nameError && (
+              <div className='profile-form-gr__errorText'>{nameError}</div>
+            )}
+            <label className='profile-form-gr__label' htmlFor='name'>
+              Имя
+              <input
+                className='profile-form-gr__input'
+                type='text'
+                name='name'
+                id='name'
+                placeholder='Введите ваше имя'
+                minLength='2'
+                maxLength='30'
+                onChange={handleChangeName}
+                value={name || ''}
+                disabled={inputValid}
+              />
+            </label>
+            {emailDirty && emailError && (
+              <div className='profile-form-gr__errorText'>{emailError}</div>
+            )}
+            <label className='profile-form-gr__label' htmlFor='email'>
+              E-mail
+              <input
+                className='profile-form-gr__input'
+                type='email'
+                name='email'
+                id='email'
+                placeholder='Введите ваш email'
+                onChange={handleChangeEmail}
+                value={email || ''}
+                disabled={inputValid}
+              />
+            </label>
+          </fieldset>
+
+          <div className='profile-btns'>
+            {errorText && <p className='profile-btns__error'>{errorText}</p>}
+            {!errorText && formUpdate && (
+              <p className='profile-btns__update'>Данные успешно обновлены</p>
+            )}
+            <button
+              className='profile-btns__edit'
+              type='submit'
+              disabled={!formValid}
+            >
+              Редактировать
+            </button>
+            <Link
+              className='profile-btns__exit'
+              to='/'
+              onClick={handleRemoveToken}
+            >
+              Выйти из аккаунта
+            </Link>
+          </div>
+        </form>
+      </section>
+    </>
   );
 }
 

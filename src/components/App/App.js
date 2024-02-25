@@ -1,13 +1,13 @@
 import './App.css';
 import { useEffect, useState } from 'react';
-import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import mainApi from '../../utils/MainApi';
 import * as auth from '../../utils/auth';
 import * as token from '../../utils/token';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { IS_LOGIN_USER } from '../../utils/constants';
 
-import Layout from '../Layout/Layout';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
@@ -21,7 +21,6 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [windowResizing, setWindowResizing] = useState([0, 0, false]);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [userData, setUserData] = useState({});
   const [errorRegister, setErrorRegister] = useState('');
   const [errorLogin, setErrorLogin] = useState('');
 
@@ -35,31 +34,14 @@ function App() {
         .checkToken()
         .then((res) => {
           setLoggedIn(true);
-
-          setUserData({ id: res._id, name: res.name, email: res.email });
+          localStorage.setItem(IS_LOGIN_USER, JSON.stringify(true));
           return res;
         })
         .catch((err) => {
           console.log(err);
         });
     }
-  }, [loggedIn]);
-
-  // useEffect(() => {
-  //   if (loggedIn) {
-  //     Promise.all([mainApi.getUserInfo(), moviesApi.getMovies()])
-  //       .then(([userData, moviesData]) => {
-  //         setCurrentUser(userData);
-  //         setMovies(moviesData);
-  //       })
-  //       .catch((err) => {
-  //         console.log(
-  //           'Ошибка получения данных пользователя и первоначального списка фильмов',
-  //           err
-  //         );
-  //       });
-  //   }
-  // }, [loggedIn]);
+  }, []);
 
   useEffect(() => {
     if (loggedIn) {
@@ -70,12 +52,6 @@ function App() {
         .catch((err) => {
           console.log('Ошибка получения данных пользователя', err);
         });
-    }
-  }, [loggedIn]);
-
-  useEffect(() => {
-    if (loggedIn) {
-      navigate('/movies');
     }
   }, [loggedIn]);
 
@@ -95,7 +71,7 @@ function App() {
 
   function handleUserInfo(res) {
     setLoggedIn(true);
-    setUserData({ name: res.name, email: res.email });
+    localStorage.setItem(IS_LOGIN_USER, JSON.stringify(true));
 
     token.setToken(res.id);
     navigate('/movies', { replace: true });
@@ -124,6 +100,7 @@ function App() {
         if (!res || res.statusCode === 400 || res?.error) {
           setErrorRegister(res.error);
         } else {
+          handleLogin({ email: email, password: password });
           handleUserInfo(res);
         }
       })
@@ -133,58 +110,62 @@ function App() {
   }
 
   function handleExitClick() {
-    setLoggedIn(false);
-    localStorage.removeItem('movies');
-    localStorage.removeItem('request');
-    localStorage.removeItem('isShortFilms');
+    auth
+      .signout()
+      .then((res) => {
+        if (!res || res.statusCode === 400 || res?.error) {
+          // setErrorRegister(res.error);
+        } else {
+          setLoggedIn(false);
+          localStorage.setItem(IS_LOGIN_USER, JSON.stringify(false));
+          localStorage.removeItem('userID');
+          localStorage.removeItem('movies');
+          localStorage.removeItem('request');
+          localStorage.removeItem('isShortFilms');
+        }
+      })
+      .catch((err) => {
+        setErrorRegister(err.message || err);
+      });
   }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className='page'>
         <Routes>
+          <Route path='/' element={<Main loggedIn={loggedIn} />} />
           <Route
-            path='*'
-            element={loggedIn ? <Navigate to='/' /> : <Navigate to='signin' />}
+            path='movies'
+            element={
+              <ProtectedRoute
+                loggedIn={loggedIn}
+                windowSize={windowResizing}
+                component={Movies}
+                setLoggedIn={setLoggedIn}
+              />
+            }
           />
           <Route
-            index
-            element={<ProtectedRoute loggedIn={loggedIn} component={Main} />}
+            path='saved-movies'
+            element={
+              <ProtectedRoute
+                loggedIn={loggedIn}
+                windowSize={windowResizing}
+                component={SavedMovies}
+              />
+            }
           />
-          <Route path='/' element={<Layout loggedIn={loggedIn} />}>
-            <Route
-              path='movies'
-              element={
-                <ProtectedRoute
-                  loggedIn={loggedIn}
-                  windowSize={windowResizing}
-                  component={Movies}
-                />
-              }
-            />
-            <Route
-              path='saved-movies'
-              element={
-                <ProtectedRoute
-                  loggedIn={loggedIn}
-                  windowSize={windowResizing}
-                  component={SavedMovies}
-                />
-              }
-            />
-            <Route
-              path='profile'
-              element={
-                <ProtectedRoute
-                  loggedIn={loggedIn}
-                  windowSize={windowResizing}
-                  userData={userData}
-                  onExit={handleExitClick}
-                  component={Profile}
-                />
-              }
-            />
-          </Route>
+          <Route
+            path='profile'
+            element={
+              <ProtectedRoute
+                loggedIn={loggedIn}
+                windowSize={windowResizing}
+                onExit={handleExitClick}
+                component={Profile}
+              />
+            }
+          />
           <Route
             path='signin'
             element={<Login onLogin={handleLogin} errorLogin={errorLogin} />}

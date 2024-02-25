@@ -1,25 +1,34 @@
 import './SearchForm.css';
-import { useLocalStorageState as useStorage } from '../../utils/hooks';
+import { useState } from 'react';
 
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
+import { INPUT_REQUEST_MOVIES } from '../../utils/constants';
 
-function SearchForm({ onClick, onChangeCheckbox, screen }) {
-  const requestMovies = screen === 'saved-movies' ? 'requestSaved' : 'request';
-  const [movie, setMovie] = useStorage(requestMovies, '');
+function SearchForm({ onClick, onChangeCheckbox, onSubmit, screen }) {
+  const [movie, setMovie] = useState(() => {
+    if (screen === 'saved-movies') {
+      return '';
+    } else {
+      return JSON.parse(localStorage.getItem(INPUT_REQUEST_MOVIES));
+    }
+  });
 
   function handleChangeMovie(e) {
     setMovie(e.target.value);
+    localStorage.setItem(INPUT_REQUEST_MOVIES, JSON.stringify(e.target.value));
   }
 
   const handleClick = (e) => {
     e.preventDefault();
     onClick(movie);
+    onSubmit(e);
   };
 
   const handleKeyDown = (e) => {
     if (e.code === 'Enter') {
       e.preventDefault();
       onClick(movie);
+      onSubmit(e);
     }
   };
 

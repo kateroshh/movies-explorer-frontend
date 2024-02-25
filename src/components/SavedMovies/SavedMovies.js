@@ -1,18 +1,17 @@
 import './SavedMovies.css';
 import { useEffect, useState } from 'react';
-import { useLocalStorageState as useStorage } from '../../utils/hooks';
+// import { useLocalStorageState as useStorage } from '../../utils/hooks';
 import mainApi from '../../utils/MainApi';
 import searchMovies from '../../utils/search-movies';
 
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-function SavedMovies({ windowSize }) {
-  const [requestSaved, setRequestSaved] = useStorage('requestSaved', '');
-  const [isShortFilmsSaved, setIsShortFilmsSaved] = useStorage(
-    'isShortFilmsSaved',
-    false
-  );
+function SavedMovies({ loggedIn, windowSize }) {
+  const [requestSaved, setRequestSaved] = useState('');
+  const [isShortFilmsSaved, setIsShortFilmsSaved] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
   const [savedMoviesList, setSavedMoviesList] = useState([]);
   const [errorText, setErrorText] = useState('');
@@ -58,29 +57,35 @@ function SavedMovies({ windowSize }) {
   };
 
   return (
-    <section className='saved-movies'>
-      <SearchForm
-        onClick={handleChangeRequest}
-        onChangeCheckbox={handleChangeShortFilms}
-        screen={'saved-movies'}
-      />
-      {errorText ? (
-        <div className='movies__error'>
-          Во время запроса произошла ошибка. Возможно, проблема с соединением
-          или сервер недоступен. Подождите немного и попробуйте ещё раз
-        </div>
-      ) : savedMoviesList.length === 0 ? (
-        <div className='saved-movies__error'>Нет сохраненных фильмов</div>
-      ) : (
-        <MoviesCardList
-          movies={savedMoviesList}
-          windowSize={windowSize}
+    <>
+      <Header loggedIn={loggedIn} />
+
+      <section className='saved-movies'>
+        <SearchForm
+          onClick={handleChangeRequest}
+          onChangeCheckbox={handleChangeShortFilms}
           screen={'saved-movies'}
-          savedMovies={savedMovies}
-          onDeleteMovie={handleDeleteMovie}
         />
-      )}
-    </section>
+        {errorText ? (
+          <div className='movies__error'>
+            Во время запроса произошла ошибка. Возможно, проблема с соединением
+            или сервер недоступен. Подождите немного и попробуйте ещё раз
+          </div>
+        ) : savedMoviesList.length === 0 ? (
+          <div className='saved-movies__error'>Нет сохраненных фильмов</div>
+        ) : (
+          <MoviesCardList
+            movies={savedMoviesList}
+            windowSize={windowSize}
+            screen={'saved-movies'}
+            savedMovies={savedMovies}
+            onDeleteMovie={handleDeleteMovie}
+          />
+        )}
+      </section>
+
+      <Footer />
+    </>
   );
 }
 

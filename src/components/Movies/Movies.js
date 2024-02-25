@@ -5,37 +5,44 @@ import { useLocalStorageState as useStorage } from '../../utils/hooks';
 import moviesApi from '../../utils/MoviesApi';
 import mainApi from '../../utils/MainApi';
 
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 
-function Movies({ windowSize }) {
+function Movies({ loggedIn, windowSize }) {
   const [request, setRequest] = useStorage('request', '');
   const [isShortFilms, setIsShortFilms] = useStorage('isShortFilms', false);
   const [movies, setMovies] = useStorage('movies', []);
   const [listMovies, setListMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
   const [errorText, setErrorText] = useState('');
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
     filterMovies();
+  }, [movies, request, isShortFilms]);
 
-    Promise.all([moviesApi.getMovies(), mainApi.getSavedMovies()])
-      .then(([moviesData, savedMoviesApi]) => {
-        setSavedMovies(savedMoviesApi);
-        setMovies(moviesData);
-      })
-      .catch((err) => {
-        // setErrorText(err.message || err);
-        setErrorText(
-          'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз'
-        );
-      });
-  }, []);
-
-  useEffect(() => {
-    filterMovies();
-  }, [request, isShortFilms]);
+  function handleFindMovies(e) {
+    e.preventDefault();
+    setLoader(true);
+    if (movies.length === 0) {
+      Promise.all([moviesApi.getMovies(), mainApi.getSavedMovies()])
+        .then(([moviesData, savedMoviesApi]) => {
+          setSavedMovies(savedMoviesApi);
+          setMovies(moviesData);
+        })
+        .catch((err) => {
+          setErrorText(
+            'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз'
+          );
+        })
+        .finally(() => {
+          setLoader(false);
+        });
+    }
+  }
 
   function filterMovies() {
     if (request || request !== '' || request !== undefined) {
@@ -60,27 +67,34 @@ function Movies({ windowSize }) {
   };
 
   return (
-    <section className='movies'>
-      <SearchForm
-        onClick={handleChangeRequest}
-        onChangeCheckbox={handleChangeShortFilms}
-        screen={'movies'}
-      />
-      {errorText ? (
-        <div className='movies__error'>{errorText}</div>
-      ) : request === '' || request === undefined ? (
-        <Preloader />
-      ) : listMovies.length === 0 ? (
-        <div className='movies__error'>Ничего не найдено</div>
-      ) : (
-        <MoviesCardList
-          movies={listMovies}
-          windowSize={windowSize}
+    <>
+      <Header loggedIn={loggedIn} />
+
+      <section className='movies'>
+        <SearchForm
+          onClick={handleChangeRequest}
+          onChangeCheckbox={handleChangeShortFilms}
+          onSubmit={handleFindMovies}
           screen={'movies'}
-          savedMovies={savedMovies}
         />
-      )}
-    </section>
+        {errorText ? (
+          <div className='movies__error'>{errorText}</div>
+        ) : request === '' || request === undefined ? (
+          loader && <Preloader />
+        ) : listMovies.length === 0 ? (
+          <div className='movies__error'>Ничего не найдено</div>
+        ) : (
+          <MoviesCardList
+            movies={listMovies}
+            windowSize={windowSize}
+            screen={'movies'}
+            savedMovies={savedMovies}
+          />
+        )}
+      </section>
+
+      <Footer />
+    </>
   );
 }
 

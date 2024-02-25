@@ -1,5 +1,5 @@
-// export const BASE_URL = 'http://localhost:3001';
-export const BASE_URL = 'https://api.kateroshh.nomoredomainsrocks.ru';
+export const BASE_URL = 'http://localhost:3001';
+// export const BASE_URL = 'https://api.kateroshh.nomoredomainsrocks.ru';
 
 function checkResponse(res) {
   return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
@@ -26,6 +26,17 @@ export const authorize = (email, password) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ email, password }),
+  }).then((res) => checkResponse(res));
+};
+
+export const signout = () => {
+  return fetch(`${BASE_URL}/signout`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
   }).then((res) => checkResponse(res));
 };
 

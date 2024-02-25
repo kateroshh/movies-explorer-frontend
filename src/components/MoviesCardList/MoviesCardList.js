@@ -2,24 +2,37 @@ import './MoviesCardList.css';
 import { useEffect, useState } from 'react';
 
 import MoviesCard from '../MoviesCard/MoviesCard';
+import * as render from '../../utils/constants';
 
 function findEndPage(windowWidth) {
-  if (windowWidth >= 1280) {
-    return 12;
-  } else if (windowWidth < 1000 && windowWidth >= 480) {
-    return 8;
-  } else if (windowWidth < 480 && windowWidth >= 320) {
-    return 5;
+  if (windowWidth >= render.LARGE_WINDOW_POINT) {
+    return render.START_NUMBER_OF_CARDS_LARGE;
+  } else if (
+    windowWidth < render.AVERAGE_WINDOW_POINT_FROM &&
+    windowWidth >= render.AVERAGE_WINDOW_POINT_UNTIL
+  ) {
+    return render.START_NUMBER_OF_CARDS_AVERAGE;
+  } else if (
+    windowWidth < render.SMALL_WINDOW_POINT_FROM &&
+    windowWidth >= render.SMALL_WINDOW_POINT_UNTIL
+  ) {
+    return render.START_NUMBER_OF_CARDS_SMALL;
   }
 }
 
 function findStep(windowWidth) {
-  if (windowWidth >= 1280) {
-    return 3;
-  } else if (windowWidth < 1000 && windowWidth >= 480) {
-    return 2;
-  } else if (windowWidth < 480 && windowWidth >= 320) {
-    return 2;
+  if (windowWidth >= render.LARGE_WINDOW_POINT) {
+    return render.ADD_NUMBER_OF_CARDS_LARGE;
+  } else if (
+    windowWidth < render.AVERAGE_WINDOW_POINT_FROM &&
+    windowWidth >= render.AVERAGE_WINDOW_POINT_UNTIL
+  ) {
+    return render.ADD_NUMBER_OF_CARDS_AVERAGE;
+  } else if (
+    windowWidth < render.SMALL_WINDOW_POINT_FROM &&
+    windowWidth >= render.SMALL_WINDOW_POINT_UNTIL
+  ) {
+    return render.ADD_NUMBER_OF_CARDS_SMALL;
   }
 }
 
@@ -40,13 +53,13 @@ function MoviesCardList({
   useEffect(() => {
     setEndPage(findEndPage(windowWidth));
     setStepPage(findStep(windowWidth));
-  }, [isResize]);
+  }, [isResize, movies]);
 
   useEffect(() => {
     return movies.length <= endPage
       ? setIsCheckData(true)
       : setIsCheckData(false);
-  }, [endPage]);
+  }, [endPage, movies]);
 
   const showMore = () => {
     setEndPage((prevValue) => prevValue + stepPage);
