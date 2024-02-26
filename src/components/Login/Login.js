@@ -1,10 +1,11 @@
 import './Login.css';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 
 import HeaderLogo from '../HeaderLogo/HeaderLogo';
 
-function Login({ onLogin, errorLogin }) {
+function Login({ onLogin, errorLogin, loggedIn }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorText, setErrorText] = useState('');
@@ -86,67 +87,73 @@ function Login({ onLogin, errorLogin }) {
   }
 
   return (
-    <div className='login'>
-      <HeaderLogo />
-      <h1 className='login__title'>Рады видеть!</h1>
-      <form className='login-form' name='login' onSubmit={onSubmit}>
-        <label className='login-form__label' htmlFor='email'>
-          E-mail
-        </label>
-        <input
-          className={`login-form__input ${
-            emailError ? 'login-form__input_error' : ''
-          }`}
-          type='email'
-          name='email'
-          id='email'
-          placeholder='Введите ваш email'
-          onChange={handleChangeEmail}
-          onBlur={handleBlur}
-          value={email || ''}
-        />
-        {emailDirty && emailError && (
-          <div className='register-form__errorText'>{emailError}</div>
-        )}
-        <label className='login-form__label' htmlFor='password'>
-          Пароль
-        </label>
-        <input
-          className={`login-form__input login-form__input_last ${
-            passwordError ? 'login-form__input_error' : ''
-          }`}
-          type='password'
-          name='password'
-          id='password'
-          placeholder='Введите ваш пароль'
-          onChange={handleChangePassword}
-          onBlur={handleBlur}
-          value={password || ''}
-        />
-        {passwordDirty && passwordError && (
-          <div className='login-form__errorText login-form__errorText_last'>
-            {passwordError}
-          </div>
-        )}
-        <p className='login-form__error'>{errorText}</p>
-        <div className='login-bottom'>
-          <button
-            className='login-bottom__submit'
-            type='submit'
-            disabled={!formValid}
-          >
-            Войти
-          </button>
+    <>
+      {loggedIn ? (
+        <Navigate to='/movies' replace />
+      ) : (
+        <div className='login'>
+          <HeaderLogo />
+          <h1 className='login__title'>Рады видеть!</h1>
+          <form className='login-form' name='login' onSubmit={onSubmit}>
+            <label className='login-form__label' htmlFor='email'>
+              E-mail
+            </label>
+            <input
+              className={`login-form__input ${
+                emailError ? 'login-form__input_error' : ''
+              }`}
+              type='email'
+              name='email'
+              id='email'
+              placeholder='Введите ваш email'
+              onChange={handleChangeEmail}
+              onBlur={handleBlur}
+              value={email || ''}
+            />
+            {emailDirty && emailError && (
+              <div className='register-form__errorText'>{emailError}</div>
+            )}
+            <label className='login-form__label' htmlFor='password'>
+              Пароль
+            </label>
+            <input
+              className={`login-form__input login-form__input_last ${
+                passwordError ? 'login-form__input_error' : ''
+              }`}
+              type='password'
+              name='password'
+              id='password'
+              placeholder='Введите ваш пароль'
+              onChange={handleChangePassword}
+              onBlur={handleBlur}
+              value={password || ''}
+            />
+            {passwordDirty && passwordError && (
+              <div className='login-form__errorText login-form__errorText_last'>
+                {passwordError}
+              </div>
+            )}
+            <p className='login-form__error'>{errorText}</p>
+            <div className='login-bottom'>
+              <button
+                className='login-bottom__submit'
+                type='submit'
+                disabled={!formValid}
+              >
+                Войти
+              </button>
 
-          <div className='reg'>
-            Ещё не зарегистрированы?
-            <Link className='reg__link' to='/signup'>
-              Регистрация
-            </Link>
-          </div>
+              <div className='reg'>
+                Ещё не зарегистрированы?
+                <Link className='reg__link' to='/signup'>
+                  Регистрация
+                </Link>
+              </div>
+            </div>
+          </form>
         </div>
-      </form>
-    </div>
+      )}
+    </>
   );
 }
 

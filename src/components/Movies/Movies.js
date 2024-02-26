@@ -16,9 +16,10 @@ function Movies({ loggedIn, windowSize }) {
   const [isShortFilms, setIsShortFilms] = useStorage('isShortFilms', false);
   const [movies, setMovies] = useStorage('movies', []);
   const [listMovies, setListMovies] = useState([]);
-  const [savedMovies, setSavedMovies] = useState([]);
+  const [savedMovies, setSavedMovies] = useStorage('saved-movies', []);
   const [errorText, setErrorText] = useState('');
   const [loader, setLoader] = useState(false);
+  const [isBlock, setIsBlock] = useState(false);
 
   useEffect(() => {
     filterMovies();
@@ -26,8 +27,9 @@ function Movies({ loggedIn, windowSize }) {
 
   function handleFindMovies(e) {
     e.preventDefault();
-    setLoader(true);
     if (movies.length === 0) {
+      setLoader(true);
+      setIsBlock(true);
       Promise.all([moviesApi.getMovies(), mainApi.getSavedMovies()])
         .then(([moviesData, savedMoviesApi]) => {
           setSavedMovies(savedMoviesApi);
@@ -40,7 +42,10 @@ function Movies({ loggedIn, windowSize }) {
         })
         .finally(() => {
           setLoader(false);
+          setIsBlock(false);
         });
+    } else {
+      setIsBlock(false);
     }
   }
 
@@ -76,12 +81,14 @@ function Movies({ loggedIn, windowSize }) {
           onChangeCheckbox={handleChangeShortFilms}
           onSubmit={handleFindMovies}
           screen={'movies'}
+          isBlock={isBlock}
+          setIsBlock={setIsBlock}
         />
         {errorText ? (
           <div className='movies__error'>{errorText}</div>
-        ) : request === '' || request === undefined ? (
+        ) : request === '' || request === undefined || loader ? (
           loader && <Preloader />
-        ) : listMovies.length === 0 ? (
+        ) : !loader && listMovies.length === 0 ? (
           <div className='movies__error'>Ничего не найдено</div>
         ) : (
           <MoviesCardList

@@ -15,6 +15,7 @@ function SavedMovies({ loggedIn, windowSize }) {
   const [savedMovies, setSavedMovies] = useState([]);
   const [savedMoviesList, setSavedMoviesList] = useState([]);
   const [errorText, setErrorText] = useState('');
+  const [isBlock, setIsBlock] = useState(false);
 
   useEffect(() => {
     Promise.all([mainApi.getSavedMovies()])
@@ -39,6 +40,7 @@ function SavedMovies({ loggedIn, windowSize }) {
         searchMovies(movie, requestSaved, isShortFilmsSaved)
       );
       setSavedMoviesList(filteredMovies);
+      setIsBlock(false);
     }
   }
 
@@ -64,7 +66,10 @@ function SavedMovies({ loggedIn, windowSize }) {
         <SearchForm
           onClick={handleChangeRequest}
           onChangeCheckbox={handleChangeShortFilms}
+          onSubmit={filterMovies}
           screen={'saved-movies'}
+          isBlock={isBlock}
+          setIsBlock={setIsBlock}
         />
         {errorText ? (
           <div className='movies__error'>

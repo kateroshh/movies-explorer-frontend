@@ -5,10 +5,14 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import * as render from '../../utils/constants';
 
 function findEndPage(windowWidth) {
-  if (windowWidth >= render.LARGE_WINDOW_POINT) {
+  if (
+    windowWidth >= render.LARGE_WINDOW_POINT ||
+    (windowWidth < render.LARGE_WINDOW_POINT &&
+      windowWidth > render.AVERAGE_WINDOW_POINT_FROM)
+  ) {
     return render.START_NUMBER_OF_CARDS_LARGE;
   } else if (
-    windowWidth < render.AVERAGE_WINDOW_POINT_FROM &&
+    windowWidth <= render.AVERAGE_WINDOW_POINT_FROM &&
     windowWidth >= render.AVERAGE_WINDOW_POINT_UNTIL
   ) {
     return render.START_NUMBER_OF_CARDS_AVERAGE;
@@ -21,7 +25,11 @@ function findEndPage(windowWidth) {
 }
 
 function findStep(windowWidth) {
-  if (windowWidth >= render.LARGE_WINDOW_POINT) {
+  if (
+    windowWidth >= render.LARGE_WINDOW_POINT ||
+    (windowWidth < render.LARGE_WINDOW_POINT &&
+      windowWidth > render.AVERAGE_WINDOW_POINT_FROM)
+  ) {
     return render.ADD_NUMBER_OF_CARDS_LARGE;
   } else if (
     windowWidth < render.AVERAGE_WINDOW_POINT_FROM &&
@@ -56,9 +64,13 @@ function MoviesCardList({
   }, [isResize, movies]);
 
   useEffect(() => {
-    return movies.length <= endPage
-      ? setIsCheckData(true)
-      : setIsCheckData(false);
+    if (screen === 'saved-movies') {
+      setIsCheckData(true);
+    } else {
+      return movies.length <= endPage
+        ? setIsCheckData(true)
+        : setIsCheckData(false);
+    }
   }, [endPage, movies]);
 
   const showMore = () => {
@@ -73,15 +85,27 @@ function MoviesCardList({
         }`}
       >
         <ul className='card-list'>
-          {movies.slice(0, endPage).map((item) => (
-            <MoviesCard
-              key={screen === 'saved-movies' ? item._id : item.id}
-              card={item}
-              screen={screen}
-              savedMovies={savedMovies}
-              onDeleteMovie={onDeleteMovie}
-            />
-          ))}
+          {isCheckData
+            ? movies.map((item) => (
+                <MoviesCard
+                  key={screen === 'saved-movies' ? item._id : item.id}
+                  card={item}
+                  screen={screen}
+                  savedMovies={savedMovies}
+                  onDeleteMovie={onDeleteMovie}
+                />
+              ))
+            : movies
+                .slice(0, endPage)
+                .map((item) => (
+                  <MoviesCard
+                    key={screen === 'saved-movies' ? item._id : item.id}
+                    card={item}
+                    screen={screen}
+                    savedMovies={savedMovies}
+                    onDeleteMovie={onDeleteMovie}
+                  />
+                ))}
         </ul>
       </div>
       <button

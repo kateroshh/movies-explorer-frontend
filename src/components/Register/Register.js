@@ -1,10 +1,11 @@
 import './Register.css';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 
 import HeaderLogo from '../HeaderLogo/HeaderLogo';
 
-function Register({ onRegister, errorRegister }) {
+function Register({ onRegister, errorRegister, loggedIn }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -117,86 +118,96 @@ function Register({ onRegister, errorRegister }) {
   }
 
   return (
-    <div className='register'>
-      <HeaderLogo />
-      <h1 className='register__title'>Добро пожаловать!</h1>
-      <form className='register-form' name='registration' onSubmit={onSubmit}>
-        <label className='register-form__label' htmlFor='name'>
-          Имя
-        </label>
-        <input
-          className={`register-form__input ${
-            nameError ? 'register-form__input_error' : ''
-          }`}
-          type='text'
-          name='name'
-          id='name'
-          placeholder='Введите ваше имя'
-          minLength='2'
-          maxLength='30'
-          onChange={handleChangeName}
-          onBlur={handleBlur}
-          value={name || ''}
-        />
-        {nameDirty && nameError && (
-          <div className='register-form__errorText'>{nameError}</div>
-        )}
-        <label className='register-form__label' htmlFor='email'>
-          E-mail
-        </label>
-        <input
-          className={`register-form__input ${
-            emailError ? 'register-form__input_error' : ''
-          }`}
-          type='email'
-          name='email'
-          id='email'
-          placeholder='Введите ваш email'
-          onChange={handleChangeEmail}
-          onBlur={handleBlur}
-          value={email || ''}
-        />
-        {emailDirty && emailError && (
-          <div className='register-form__errorText'>{emailError}</div>
-        )}
-        <label className='register-form__label' htmlFor='password'>
-          Пароль
-        </label>
-        <input
-          className={`register-form__input register-form__input_last ${
-            passwordError ? 'register-form__input_error' : ''
-          }`}
-          type='password'
-          name='password'
-          id='password'
-          placeholder='Введите ваш пароль'
-          minLength='3'
-          maxLength='50'
-          onChange={handleChangePassword}
-          onBlur={handleBlur}
-          value={password || ''}
-        />
-        {passwordDirty && passwordError && (
-          <div className='register-form__errorText register-form__errorText_last'>
-            {passwordError}
+    <>
+      {loggedIn ? (
+        <Navigate to='/movies' replace />
+      ) : (
+        <div className='register'>
+          <HeaderLogo />
+          <h1 className='register__title'>Добро пожаловать!</h1>
+          <form
+            className='register-form'
+            name='registration'
+            onSubmit={onSubmit}
+          >
+            <label className='register-form__label' htmlFor='name'>
+              Имя
+            </label>
+            <input
+              className={`register-form__input ${
+                nameError ? 'register-form__input_error' : ''
+              }`}
+              type='text'
+              name='name'
+              id='name'
+              placeholder='Введите ваше имя'
+              minLength='2'
+              maxLength='30'
+              onChange={handleChangeName}
+              onBlur={handleBlur}
+              value={name || ''}
+            />
+            {nameDirty && nameError && (
+              <div className='register-form__errorText'>{nameError}</div>
+            )}
+            <label className='register-form__label' htmlFor='email'>
+              E-mail
+            </label>
+            <input
+              className={`register-form__input ${
+                emailError ? 'register-form__input_error' : ''
+              }`}
+              type='email'
+              name='email'
+              id='email'
+              placeholder='Введите ваш email'
+              onChange={handleChangeEmail}
+              onBlur={handleBlur}
+              value={email || ''}
+            />
+            {emailDirty && emailError && (
+              <div className='register-form__errorText'>{emailError}</div>
+            )}
+            <label className='register-form__label' htmlFor='password'>
+              Пароль
+            </label>
+            <input
+              className={`register-form__input register-form__input_last ${
+                passwordError ? 'register-form__input_error' : ''
+              }`}
+              type='password'
+              name='password'
+              id='password'
+              placeholder='Введите ваш пароль'
+              minLength='3'
+              maxLength='50'
+              onChange={handleChangePassword}
+              onBlur={handleBlur}
+              value={password || ''}
+            />
+            {passwordDirty && passwordError && (
+              <div className='register-form__errorText register-form__errorText_last'>
+                {passwordError}
+              </div>
+            )}
+            <p className='register-form__error'>{errorText}</p>
+            <button
+              className='register-form__submit'
+              type='submit'
+              disabled={!formValid}
+            >
+              Зарегистрироваться
+            </button>
+          </form>
+          <div className='auth'>
+            Уже зарегистрированы?
+            <Link className='auth__link' to='/signin'>
+              Войти
+            </Link>
           </div>
-        )}
-        <p className='register-form__error'>{errorText}</p>
-        <button
-          className='register-form__submit'
-          type='submit'
-          disabled={!formValid}
-        >
-          Зарегистрироваться
-        </button>
-      </form>
-      <div className='auth'>
-        Уже зарегистрированы?
-        <Link className='auth__link' to='/signin'>
-          Войти
-        </Link>
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   );
 }
 

@@ -2,7 +2,7 @@ import './FilterCheckbox.css';
 import { useState } from 'react';
 import { CHKBOX_SHORT_FILMS } from '../../utils/constants';
 
-function FilterCheckbox({ onChangeCheckbox, screen }) {
+function FilterCheckbox({ onChangeCheckbox, screen, isBlock }) {
   const [chkbox, setChkbox] = useState(() => {
     if (screen === 'saved-movies') {
       return false;
@@ -12,9 +12,17 @@ function FilterCheckbox({ onChangeCheckbox, screen }) {
   });
 
   function handleChangeCheckbox(e) {
-    setChkbox(e.target.checked);
-    localStorage.setItem(CHKBOX_SHORT_FILMS, JSON.stringify(e.target.checked));
-    onChangeCheckbox(e.target.checked);
+    if (screen === 'saved-movies') {
+      setChkbox(e.target.checked);
+      onChangeCheckbox(e.target.checked);
+    } else {
+      setChkbox(e.target.checked);
+      localStorage.setItem(
+        CHKBOX_SHORT_FILMS,
+        JSON.stringify(e.target.checked)
+      );
+      onChangeCheckbox(e.target.checked);
+    }
   }
 
   return (
@@ -25,6 +33,7 @@ function FilterCheckbox({ onChangeCheckbox, screen }) {
         type='checkbox'
         checked={chkbox}
         onChange={handleChangeCheckbox}
+        disabled={isBlock}
       />
       <span className='filter-checkbox__checkmark'></span>
     </label>

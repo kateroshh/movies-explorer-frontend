@@ -38,8 +38,11 @@ function App() {
           return res;
         })
         .catch((err) => {
+          localStorage.setItem(IS_LOGIN_USER, JSON.stringify(false));
           console.log(err);
         });
+    } else {
+      localStorage.setItem(IS_LOGIN_USER, JSON.stringify(false));
     }
   }, []);
 
@@ -101,7 +104,7 @@ function App() {
           setErrorRegister(res.error);
         } else {
           handleLogin({ email: email, password: password });
-          handleUserInfo(res);
+          // handleUserInfo(res);
         }
       })
       .catch((err) => {
@@ -110,23 +113,14 @@ function App() {
   }
 
   function handleExitClick() {
-    auth
-      .signout()
-      .then((res) => {
-        if (!res || res.statusCode === 400 || res?.error) {
-          // setErrorRegister(res.error);
-        } else {
-          setLoggedIn(false);
-          localStorage.setItem(IS_LOGIN_USER, JSON.stringify(false));
-          localStorage.removeItem('userID');
-          localStorage.removeItem('movies');
-          localStorage.removeItem('request');
-          localStorage.removeItem('isShortFilms');
-        }
-      })
-      .catch((err) => {
-        setErrorRegister(err.message || err);
-      });
+    auth.signout();
+    setLoggedIn(false);
+    localStorage.setItem(IS_LOGIN_USER, JSON.stringify(false));
+    localStorage.removeItem('userID');
+    localStorage.removeItem('movies');
+    localStorage.removeItem('saved-movies');
+    localStorage.removeItem('request');
+    localStorage.removeItem('isShortFilms');
   }
 
   return (
@@ -168,7 +162,13 @@ function App() {
           />
           <Route
             path='signin'
-            element={<Login onLogin={handleLogin} errorLogin={errorLogin} />}
+            element={
+              <Login
+                onLogin={handleLogin}
+                errorLogin={errorLogin}
+                loggedIn={loggedIn}
+              />
+            }
           />
           <Route
             path='signup'
@@ -176,6 +176,7 @@ function App() {
               <Register
                 onRegister={handleRegister}
                 errorRegister={errorRegister}
+                loggedIn={loggedIn}
               />
             }
           />

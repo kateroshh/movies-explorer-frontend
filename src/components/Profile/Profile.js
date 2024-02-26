@@ -1,7 +1,6 @@
 import './Profile.css';
 import { Link } from 'react-router-dom';
 import { useEffect, useState, useContext } from 'react';
-import * as token from '../../utils/token';
 import mainApi from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Header from '../Header/Header';
@@ -82,7 +81,6 @@ function Profile({ loggedIn, onExit }) {
   }
 
   function handleRemoveToken() {
-    token.removeToken();
     onExit();
   }
 
