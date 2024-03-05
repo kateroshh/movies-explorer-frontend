@@ -7,9 +7,21 @@
     box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.08);
 }
 
+.card__link {
+    text-decoration: none;
+    color: #000;
+}
+
+.card__link:hover {
+    opacity: .8;
+}
+
 .card__img {
+    max-width: 364px;
+    height: 203px;
     width: 100%;
     background-size: cover;
+    object-fit: cover;
 }
 
 .card-top {
@@ -28,6 +40,11 @@
     font-size: 15px;
     font-weight: 500;
     line-height: normal;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    max-width: 250px;
+    width: 100%;
 }
 
 .card-title__time {
@@ -65,32 +82,38 @@
     opacity: .7;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1000px) {
     .card__img {
         max-width: 339px;
         max-height: 190px;
     }
-}
 
-@media screen and (max-width: 550px) {
     .card-title__text {
-        font-size: 13px;
+        max-width: 230px;
     }
 }
 
-@media screen and (max-width: 460px) {
+/* @media screen and (max-width: 550px) {
+    .card-title__text {
+        font-size: 13px;
+        max-width: 160px;
+    }
+} */
+
+@media screen and (max-width: 600px) {
     .card {
-        max-width: 300px;
+        max-width: 500px;
         height: 236px;
     }
 
     .card__img {
-        max-width: 300px;
+        max-width: 500px;
         height: 168px;
     }
 
     .card-title__text {
         font-size: 15px;
+        max-width: 160px;
     }
 
 }
